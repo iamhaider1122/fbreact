@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Login';
 import SignUp from './SignUp';
 import Home from './Home';
-Home
+import FireStoreDb from './FireStoreDb';
+
 function App() {
   return (
     <>
@@ -11,9 +12,8 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<><SignUp /></>} />
-          <Route path="/login" element={<><Login /></>} />
-          <Route path="/home" element={<><Home /></>} />
+          <Route path="/" element={<>< FireStoreDb /></>} />
+
         </Routes>
 
       </BrowserRouter>
