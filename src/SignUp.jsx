@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import app from './firebase'
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getAuth, signOut, createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 function SignUp() {
 
 
@@ -54,6 +55,36 @@ function SignUp() {
       });
   };
 
+  const googleSignIn = async () => {
+    console.log('signUp with google...');
+
+    //prompt parameter to force choosing account
+    provider.setCustomParameters({
+      prompt: 'select_account',
+    });
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user, 'user end', credential, 'cred end', token, 'token end');
+        navigate('/home')
+      }).catch((error) => {
+
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('ERROR:', error);
+        const email = error.customData.email;
+
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
+
+
   return (
     <>
       <div className="container mt-5  ">
@@ -101,6 +132,7 @@ function SignUp() {
               </button>
             </form>
             <p className="mt-5">Already Have an account <Link to={`/login`} className=" ms-2 btn btn-primary">Login</Link></p>
+            <button className='btn btn-warning' onClick={googleSignIn}>Sign In with Google</button>
           </div>
         </div>
       </div>

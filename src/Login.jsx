@@ -28,9 +28,9 @@ function Login() {
     }
   };
 
-  const handleSignUp = async (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    console.log(name, email, password);
+    console.log(email, password);
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
@@ -51,7 +51,7 @@ function Login() {
         <div className="row justify-content-center  ">
           <div className="col-8 border border-2 p-5 customCard">
             <h3 className="text-center text-secondary">Sign Up</h3>
-            <form onSubmit={handleSignUp}>
+            <form onSubmit={handleSignIn}>
 
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
